@@ -33,6 +33,6 @@ export default {
   },
   bootstrap(app: StrapiApp) {
     console.log(app);
-    console.log('Admin app initialized');
+    console.log('Admin app initialized successfully');
   },
 };
