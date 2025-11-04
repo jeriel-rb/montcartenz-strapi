@@ -1,5 +1,7 @@
 # 🚀 Getting started with Strapi
 
+Built with Strapi and deployed on Railway. Strapi provides a headless CMS with a powerful admin panel and REST/GraphQL APIs.
+
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
 ### `develop`
