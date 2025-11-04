@@ -33,7 +33,5 @@ export default {
   },
   bootstrap(app: StrapiApp) {
     console.log(app);
-    console.log('Admin app initialized successfully');
-    console.log('Admin app initialized successfully');
   },
 };
