@@ -4,6 +4,19 @@ Built with Strapi and deployed on Railway. Strapi provides a headless CMS with a
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
+## Media storage (AWS S3 + optional CDN)
+
+- Uses AWS S3 for uploads when `AWS_BUCKET` is set. Otherwise, files are stored locally in `public/uploads/`.
+- Optional CDN/domain: set `AWS_CDN_URL` to have media URLs served from your CDN (e.g., CloudFront).
+- Allowed sources for images/media are enforced via Content Security Policy.
+
+Environment variables:
+- `AWS_BUCKET` (required to enable S3)
+- `AWS_REGION` (e.g., `us-east-1`)
+- `AWS_ACCESS_KEY_ID`
+- `AWS_ACCESS_SECRET`
+- `AWS_CDN_URL` (optional, e.g., `https://cdn.example.com`)
+
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
