@@ -1,9 +1,11 @@
+import path from 'path';
+// @ts-ignore
 export default ({ env }) => ({
+  connection: {
+    client: 'sqlite',
     connection: {
-        client: 'postgres',
-        connection: {
-            connectionString: env('DATABASE_URL')
-        },
-        acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
-    }
+      filename: path.join(process.cwd(), env('DATABASE_FILENAME', '.tmp/data.db')),
+    },
+    useNullAsDefault: true,
+  },
 });
