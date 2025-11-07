@@ -1,36 +1,26 @@
 {
   "kind": "collectionType",
-  "collectionName": "series",
+  "collectionName": "tastes",
   "info": {
-    "singularName": "serie",
-    "pluralName": "series",
-    "displayName": "Serie",
+    "singularName": "taste",
+    "pluralName": "tastes",
+    "displayName": "Taste",
     "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
   "attributes": {
     "name": {
       "type": "string",
       "required": true,
-      "unique": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "unique": true
     },
     "products": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::product.product",
-      "mappedBy": "series"
+      "inversedBy": "tastes"
     }
   }
 }

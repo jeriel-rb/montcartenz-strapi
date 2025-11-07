@@ -31,7 +31,7 @@
       }
     },
     "price": {
-      "type": "decimal",
+      "type": "biginteger",
       "required": true
     },
     "photos": {
@@ -49,11 +49,29 @@
       "required": true,
       "minLength": 5
     },
-    "serie": {
+    "series": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::serie.serie",
       "inversedBy": "products"
+    },
+    "ingredients": {
+      "type": "richtext",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "ml": {
+      "type": "integer"
+    },
+    "tastes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::taste.taste",
+      "mappedBy": "products"
     }
   }
 }
