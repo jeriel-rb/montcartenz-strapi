@@ -37,7 +37,7 @@
     "photos": {
       "type": "media",
       "multiple": true,
-      "required": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files"
@@ -48,6 +48,12 @@
       "unique": true,
       "required": true,
       "minLength": 5
+    },
+    "serie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::serie.serie",
+      "inversedBy": "products"
     }
   }
 }
