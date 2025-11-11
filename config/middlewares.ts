@@ -13,6 +13,7 @@ export default ({ env }) => [
             'data:',
             'blob:',
             'dl.airtable.com',
+            'https://',
             `https://${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`,
             env('AWS_CDN_URL'),
           ].filter(Boolean),

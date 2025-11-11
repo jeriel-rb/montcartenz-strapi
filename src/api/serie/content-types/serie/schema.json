@@ -24,19 +24,20 @@
       "target": "api::product.product",
       "mappedBy": "series"
     },
-    "description": {
-      "type": "text",
-      "pluginOptions": {}
-    },
     "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "isMainSeries": {
+      "type": "boolean",
+      "required": true
     }
   }
 }
