@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_series",
+  "info": {
+    "singularName": "product-serie",
+    "pluralName": "product-series",
+    "displayName": "Product Serie",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "description": {
+      "type": "text"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "product_series"
+    },
+    "sub_series": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-subserie.product-subserie",
+      "mappedBy": "parent_serie"
+    }
+  }
+}
+

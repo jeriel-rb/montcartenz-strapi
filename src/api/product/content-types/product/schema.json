@@ -19,7 +19,12 @@
     "name": {
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "description": {
       "type": "richtext",
@@ -47,13 +52,45 @@
       "type": "string",
       "unique": true,
       "required": true,
-      "minLength": 5
+      "minLength": 5,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "series": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::serie.serie",
-      "inversedBy": "products"
+      "inversedBy": "products",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "product_series": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product-serie.product-serie",
+      "inversedBy": "products",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "sub_series": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product-subserie.product-subserie",
+      "mappedBy": "products",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "ingredients": {
       "type": "richtext",
@@ -71,13 +108,17 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::taste.taste",
-      "mappedBy": "products"
+      "mappedBy": "products",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
-    "product_reviews": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product-review.product-review",
-      "mappedBy": "product"
+    "reviews": {
+      "type": "component",
+      "repeatable": true,
+      "component": "review.review"
     }
   }
 }

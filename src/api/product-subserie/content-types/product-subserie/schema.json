@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_subseries",
+  "info": {
+    "singularName": "product-subserie",
+    "pluralName": "product-subseries",
+    "displayName": "Product Subserie",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "parent_serie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product-serie.product-serie",
+      "inversedBy": "sub_series"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "inversedBy": "sub_series"
+    }
+  }
+}
+

@@ -369,14 +369,14 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiProductReviewProductReview
+export interface ApiProductSerieProductSerie
   extends Struct.CollectionTypeSchema {
-  collectionName: 'product_reviews';
+  collectionName: 'product_series';
   info: {
     description: '';
-    displayName: 'Product Review';
-    pluralName: 'product-reviews';
-    singularName: 'product-review';
+    displayName: 'Product Serie';
+    pluralName: 'product-series';
+    singularName: 'product-serie';
   };
   options: {
     draftAndPublish: true;
@@ -385,34 +385,68 @@ export interface ApiProductReviewProductReview
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    date: Schema.Attribute.Date;
+    description: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::product-review.product-review'
+      'api::product-serie.product-serie'
     > &
       Schema.Attribute.Private;
-    product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
-    publishedAt: Schema.Attribute.DateTime;
-    rating: Schema.Attribute.Integer &
+    name: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 5;
-          min: 1;
-        },
-        number
-      >;
-    review: Schema.Attribute.Text &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        minLength: 5;
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
       }>;
+    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    sub_series: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-subserie.product-subserie'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user_avatar: Schema.Attribute.Media<'images' | 'files'>;
-    username: Schema.Attribute.String;
+  };
+}
+
+export interface ApiProductSubserieProductSubserie
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'product_subseries';
+  info: {
+    description: '';
+    displayName: 'Product Subserie';
+    pluralName: 'product-subseries';
+    singularName: 'product-subserie';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-subserie.product-subserie'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    parent_serie: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::product-serie.product-serie'
+    >;
+    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -458,22 +492,57 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     ml: Schema.Attribute.Integer;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     photos: Schema.Attribute.Media<'images' | 'files', true>;
     price: Schema.Attribute.BigInteger & Schema.Attribute.Required;
-    product_reviews: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::product-review.product-review'
-    >;
+    product_series: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::product-serie.product-serie'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
-    series: Schema.Attribute.Relation<'manyToMany', 'api::serie.serie'>;
+    reviews: Schema.Attribute.Component<'review.review', true>;
+    series: Schema.Attribute.Relation<'manyToMany', 'api::serie.serie'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     slug: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 5;
       }>;
-    tastes: Schema.Attribute.Relation<'manyToMany', 'api::taste.taste'>;
+    sub_series: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::product-subserie.product-subserie'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    tastes: Schema.Attribute.Relation<'manyToMany', 'api::taste.taste'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1049,7 +1118,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::product-review.product-review': ApiProductReviewProductReview;
+      'api::product-serie.product-serie': ApiProductSerieProductSerie;
+      'api::product-subserie.product-subserie': ApiProductSubserieProductSubserie;
       'api::product.product': ApiProductProduct;
       'api::serie.serie': ApiSerieSerie;
       'api::taste.taste': ApiTasteTaste;
