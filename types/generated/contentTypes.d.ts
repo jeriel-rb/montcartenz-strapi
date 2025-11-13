@@ -369,6 +369,53 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiProductReviewProductReview
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'product_reviews';
+  info: {
+    description: '';
+    displayName: 'Product Review';
+    pluralName: 'product-reviews';
+    singularName: 'product-review';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-review.product-review'
+    > &
+      Schema.Attribute.Private;
+    product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 1;
+        },
+        number
+      >;
+    review: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 5;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_avatar: Schema.Attribute.Media<'images' | 'files'>;
+    username: Schema.Attribute.String;
+  };
+}
+
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
@@ -414,6 +461,10 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Unique;
     photos: Schema.Attribute.Media<'images' | 'files', true>;
     price: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    product_reviews: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-review.product-review'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     series: Schema.Attribute.Relation<'manyToMany', 'api::serie.serie'>;
     slug: Schema.Attribute.String &
@@ -998,6 +1049,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::product-review.product-review': ApiProductReviewProductReview;
       'api::product.product': ApiProductProduct;
       'api::serie.serie': ApiSerieSerie;
       'api::taste.taste': ApiTasteTaste;

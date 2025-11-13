@@ -72,6 +72,12 @@
       "relation": "manyToMany",
       "target": "api::taste.taste",
       "mappedBy": "products"
+    },
+    "product_reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-review.product-review",
+      "mappedBy": "product"
     }
   }
 }
