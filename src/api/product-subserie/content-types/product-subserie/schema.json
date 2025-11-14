@@ -21,18 +21,17 @@
       "type": "text",
       "required": false
     },
-    "parent_serie": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::product-serie.product-serie",
-      "inversedBy": "sub_series"
-    },
     "products": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::product.product",
       "inversedBy": "sub_series"
+    },
+    "parent_series": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product-serie.product-serie",
+      "inversedBy": "sub_series"
     }
   }
 }
-

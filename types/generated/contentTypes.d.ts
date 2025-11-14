@@ -386,6 +386,9 @@ export interface ApiProductSerieProductSerie
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    display_order: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -400,10 +403,12 @@ export interface ApiProductSerieProductSerie
           localized: false;
         };
       }>;
+    photo: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     sub_series: Schema.Attribute.Relation<
-      'oneToMany',
+      'manyToMany',
       'api::product-subserie.product-subserie'
     >;
     updatedAt: Schema.Attribute.DateTime;
@@ -438,8 +443,8 @@ export interface ApiProductSubserieProductSubserie
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    parent_serie: Schema.Attribute.Relation<
-      'manyToOne',
+    parent_series: Schema.Attribute.Relation<
+      'manyToMany',
       'api::product-serie.product-serie'
     >;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
@@ -511,12 +516,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       }>;
     publishedAt: Schema.Attribute.DateTime;
     reviews: Schema.Attribute.Component<'review.review', true>;
-    series: Schema.Attribute.Relation<'manyToMany', 'api::serie.serie'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
     slug: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
@@ -543,37 +542,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
           localized: false;
         };
       }>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiSerieSerie extends Struct.CollectionTypeSchema {
-  collectionName: 'series';
-  info: {
-    description: '';
-    displayName: 'Serie';
-    pluralName: 'series';
-    singularName: 'serie';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    isMainSeries: Schema.Attribute.Boolean & Schema.Attribute.Required;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::serie.serie'> &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    photo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
-    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1121,7 +1089,6 @@ declare module '@strapi/strapi' {
       'api::product-serie.product-serie': ApiProductSerieProductSerie;
       'api::product-subserie.product-subserie': ApiProductSubserieProductSubserie;
       'api::product.product': ApiProductProduct;
-      'api::serie.serie': ApiSerieSerie;
       'api::taste.taste': ApiTasteTaste;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

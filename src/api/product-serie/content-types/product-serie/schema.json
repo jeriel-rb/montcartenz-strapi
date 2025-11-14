@@ -33,10 +33,23 @@
     },
     "sub_series": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::product-subserie.product-subserie",
-      "mappedBy": "parent_serie"
+      "mappedBy": "parent_series"
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "display_order": {
+      "type": "integer",
+      "required": true,
+      "unique": true
     }
   }
 }
-

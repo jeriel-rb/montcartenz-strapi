@@ -9,7 +9,7 @@ export interface ReviewReview extends Struct.ComponentSchema {
   attributes: {
     avatar: Schema.Attribute.Media<'images' | 'files'>;
     date: Schema.Attribute.Date;
-    name: Schema.Attribute.String;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     rating: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
