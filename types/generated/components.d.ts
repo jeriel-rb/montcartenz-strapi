@@ -15,10 +15,11 @@ export interface ReviewReview extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMax<
         {
           max: 5;
-          min: 1;
+          min: 3;
         },
         number
-      >;
+      > &
+      Schema.Attribute.DefaultTo<5>;
     review: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{

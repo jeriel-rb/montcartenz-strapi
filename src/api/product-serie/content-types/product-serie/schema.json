@@ -22,9 +22,6 @@
         }
       }
     },
-    "description": {
-      "type": "text"
-    },
     "products": {
       "type": "relation",
       "relation": "manyToMany",

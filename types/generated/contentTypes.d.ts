@@ -385,7 +385,6 @@ export interface ApiProductSerieProductSerie
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
     display_order: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
