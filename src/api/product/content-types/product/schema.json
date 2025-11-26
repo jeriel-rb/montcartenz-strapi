@@ -43,16 +43,13 @@
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files"
-      ]
+      "allowedTypes": ["images", "files"]
     },
     "slug": {
       "type": "string",
       "unique": true,
       "required": true,
-      "minLength": 5,
+      "minLength": 2,
       "pluginOptions": {
         "i18n": {
           "localized": false
